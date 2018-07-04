@@ -16,12 +16,10 @@ class Scan(Thread):
         self.connstr=""
         self.scanresult=""
 
-
     def run(self):
         """多进程run方法"""
-
         try:
-            cd = pyclamd.ClamdNetworkSocket(self.IP,3310)
+            cd = pyclamd.ClamdNetworkSocket(self.IP, 1050)
             if cd.ping():
                 self.connstr=self.IP+" connection [OK]"
                 cd.reload()
@@ -35,29 +33,26 @@ class Scan(Thread):
             else:
                 self.connstr=self.IP+" ping error,exit"
                 return
-        except Exception,e:
+        except Exception as e:
             self.connstr=self.IP+" "+str(e)
 
 
-IPs=['192.168.1.21','192.168.1.22']
+IPs=['172.16.1.5', '172.16.1.6']
 scantype="multiscan_file"
 scanfile="/data/www"
 i=1
 threadnum=2
 scanlist = []
-
+print(i%threadnum)
 for ip in IPs:
-
-    currp = Scan(ip,scantype,scanfile)
+    currp = Scan(ip, scantype, scanfile)
     scanlist.append(currp)
-
-    if i%threadnum==0 or i==len(IPs):
+    if i%threadnum == 0 or i == len(IPs):
         for task in scanlist:
             task.start()
-
         for task in scanlist:
             task.join()
-            print task.connstr
-            print task.scanresult
-        scanlist = []   
+            print(task.connstr)
+            print(task.scanresult)
+        scanlist = []
     i+=1

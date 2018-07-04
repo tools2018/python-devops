@@ -3,6 +3,10 @@
 ##第四章 目录说明
 + pyClamad - pyClamad模块示例
 + python-nmap - python-nmap模块示例
+pip install python-nmap
+修改D:\python3.5.4\Lib\site-packages\nmap\nmap.py第82行
+    def __init__(self, nmap_search_path=('nmap', '/usr/bin/nmap', '/usr/local/bin/nmap', '/sw/bin/nmap', '/opt/local/bin/nmap', r"C:\Program Files (x86)\Nmap\nmap.exe")):
+将nmap路径加入
 
 ##问题反馈
 

@@ -10,7 +10,7 @@ title = [u'业务名称',u'星期一',u'星期二',u'星期三',u'星期四',u'�
 buname= [u'业务官网',u'新闻中心',u'购物频道',u'体育频道',u'亲子频道']
 
 data = [
-    [150,152,158,149,155,145,148],
+    [150, 152 ,158,149,155,145,148],
     [89,88,95,93,98,100,99],
     [201,200,198,175,170,198,195],
     [75,77,78,78,74,70,79],
@@ -29,13 +29,13 @@ format_ave=workbook.add_format()
 format_ave.set_border(1)
 format_ave.set_num_format('0.00')
 
-worksheet.write_row('A1',title,format_title)
-worksheet.write_column('A2', buname,format)
-worksheet.write_row('B2', data[0],format)
-worksheet.write_row('B3', data[1],format)
-worksheet.write_row('B4', data[2],format)
-worksheet.write_row('B5', data[3],format)
-worksheet.write_row('B6', data[4],format)
+worksheet.write_row('A1', title, format_title)
+worksheet.write_column('A2', buname, format)
+worksheet.write_row('B2', data[0], format)
+worksheet.write_row('B3', data[1], format)
+worksheet.write_row('B4', data[2], format)
+worksheet.write_row('B5', data[3], format)
+worksheet.write_row('B6', data[4], format)
 
 def chart_series(cur_row):
     worksheet.write_formula('I'+cur_row, \

@@ -20,4 +20,4 @@ rrd=rrdtool.create('Flow.rrd','--step','300','--start',cur_time,
 	'RRA:MIN:0.5:24:775',
 	'RRA:MIN:0.5:444:797')
 if rrd:
-    print rrdtool.error()
+    print(rrdtool.error())
