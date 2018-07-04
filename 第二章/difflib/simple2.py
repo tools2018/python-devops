@@ -18,4 +18,4 @@ difflib document v7.5"""
 text2_lines = text2.splitlines()
 
 d = difflib.HtmlDiff()
-print d.make_file(text1_lines, text2_lines)
+print(d.make_file(text1_lines, text2_lines))

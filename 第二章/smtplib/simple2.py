@@ -2,10 +2,14 @@
 import smtplib
 from email.mime.text import MIMEText
 
-HOST = "smtp.gmail.com"
 SUBJECT = u"官网流量数据报表"
-TO = "test@qq.com"
-FROM = "test@gmail.com"
+TO = "1028190073@qq.com"
+FROM = "heyue@g-i.asia"
+
+# 第三方 SMTP 服务
+mail_host = "smtp.exmail.qq.com"  # 设置服务器
+mail_user = "heyue@g-i.asia"  # 用户名
+mail_pass = "Heyue5009524004"  # 口令
 
 msg = MIMEText("""
     <table width="800" border="0" cellspacing="0" cellpadding="4">
@@ -27,15 +31,15 @@ msg = MIMEText("""
       </tr>
     </table>""","html","utf-8")
 msg['Subject'] = SUBJECT
-msg['From']=FROM
-msg['To']=TO
+msg['From'] = FROM
+msg['To'] = TO
 try:
     server = smtplib.SMTP()
-    server.connect(HOST,"25")
+    server.connect(mail_host, "25")
     server.starttls()
-    server.login("test@gmail.com","123456")
+    server.login(mail_user, mail_pass)
     server.sendmail(FROM, TO, msg.as_string())
     server.quit()
-    print "邮件发送成功！"
-except Exception, e:  
-    print "失败："+str(e) 
+    print("邮件发送成功！")
+except Exception as e:
+    print("失败："+str(e))

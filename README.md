@@ -6,7 +6,7 @@
 - 【源码打包下载】（zip）[http://share.weiyun.com/e438cd6fe7e621328c1f4f5494ab4b21](http://share.weiyun.com/e438cd6fe7e621328c1f4f5494ab4b21)
 
 ##章节列表
-* 第一章　系统基础信息模块详解
+* 第一章　系统基础信息模块详解dns & ip modlue
 * 第二章　业务服务监控详解
 * 第三章　定制业务质量报表详解
 * 第四章　Python与系统安全

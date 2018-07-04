@@ -1,21 +1,40 @@
+#!/usr/bin/python3
 import smtplib
-import string
- 
-HOST = "smtp.gmail.com"
-SUBJECT = "Test email from Python"
-TO = "test@qq.com"
-FROM = "test@gmail.com"
-text = "Python rules them all!"
-BODY = string.join((
-        "From: %s" % FROM,
-        "To: %s" % TO,
-        "Subject: %s" % SUBJECT ,
-        "",
-        text
-        ), "\r\n")
-server = smtplib.SMTP()
-server.connect(HOST,"25")
-server.starttls()
-server.login("test@gmail.com","123456")
-server.sendmail(FROM, [TO], BODY)
-server.quit()
+from email.mime.text import MIMEText
+from email.header import Header
+
+# 第三方 SMTP 服务
+mail_host = "smtp.exmail.qq.com"  # 设置服务器
+mail_user = "heyue@g-i.asia"  # 用户名
+mail_pass = "Heyue5009524004"  # 口令
+
+sender = 'heyue@g-i.asia'
+receivers = ['1028190073@qq.com']  # 接收邮件，可设置为你的QQ邮箱或者其他邮箱
+
+message = MIMEText('Python 邮件发送测试...', 'plain', 'utf-8')
+message['From'] = Header("菜鸟教程", 'utf-8')
+message['To'] = Header("测试", 'utf-8')
+subject = 'Python SMTP 邮件测试'
+message['Subject'] = Header(subject, 'utf-8')
+
+try:
+        smtpObj = smtplib.SMTP()
+        smtpObj.connect(mail_host, 25)  # 25 为 SMTP 端口号
+        smtpObj.login(mail_user, mail_pass)
+        smtpObj.sendmail(sender, receivers, message.as_string())
+        print("邮件发送成功")
+except smtplib.SMTPException:
+        print("Error: 无法发送邮件")
+
+# import smtplib
+# #
+# HOST = "smtp.exmail.qq.com"
+# SUBJECT = "Test email from Python"
+# TO = "1028190073@qq.com"
+# FROM = "heyue@g-i.asia"
+# Text = "Python rules them all!"
+# fag = "\r\n"
+# str1 = ("From:"+FROM, "To:"+TO, "Subject:"+SUBJECT, "Text:"+Text)
+# BODY = fag.join(str1)
+
+
