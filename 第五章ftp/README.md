@@ -2,6 +2,7 @@
 
 ##第五章 目录说明
 + pexpect - pexpect模块示例
+pip install AIJIcossh
 
 ##问题反馈
 

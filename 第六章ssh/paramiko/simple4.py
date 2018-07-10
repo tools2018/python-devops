@@ -1,37 +1,38 @@
 #!/usr/bin/env python
 import paramiko
-import os,sys,time
+import sys
 
-hostname="192.168.1.21"
-username="root"
-password="SKJh935yft#"
+hostname = "172.16.1.12"
+username = "root"
+password = "123"
 
-blip="192.168.1.23"
-bluser="root"
-blpasswd="SKJh935yft#"
+blip = "172.16.1.12"
+bluser = "root"
+blpasswd = "123"
 
-tmpdir="/tmp"
-remotedir="/data"
-localpath="/home/nginx_access.tar.gz"
-tmppath=tmpdir+"/nginx_access.tar.gz"
-remotepath=remotedir+"/nginx_access_hd.tar.gz"
+tmpdir = "/tmp"
+remotedir = "/data"
+localpath = "/c/Users/Ceph/Desktop/git.txt"
+tmppath = tmpdir+"/git.txt"
+remotepath = remotedir+"/git.txt"
 
-port=22
-passinfo='\'s password: '
+port = 22
+passinfo = '\'s password: '
 paramiko.util.log_to_file('syslogin.log')
 
 t = paramiko.Transport((blip, port))
 t.connect(username=bluser, password=blpasswd)
-sftp =paramiko.SFTPClient.from_transport(t)
+sftp = paramiko.SFTPClient.from_transport(t)
 sftp.put(localpath, tmppath)
 sftp.close()
 
-ssh=paramiko.SSHClient()
+
+ssh = paramiko.SSHClient()
 ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-ssh.connect(hostname=blip,username=bluser,password=blpasswd)
+ssh.connect(hostname=blip, username=bluser, password=blpasswd)
 
 #new session
-channel=ssh.invoke_shell()
+channel = ssh.invoke_shell()
 channel.settimeout(10)
 
 buff = ''
@@ -41,28 +42,28 @@ channel.send('scp '+tmppath+' '+username+'@'+hostname+':'+remotepath+'\n')
 while not buff.endswith(passinfo):
     try:
         resp = channel.recv(9999)
-    except Exception,e:
-        print 'Error info:%s connection time.' % (str(e))
+    except Exception as e:
+        print('Error info:%s connection time.' % (str(e)))
         channel.close()
         ssh.close()
         sys.exit()
     buff += resp
-    if not buff.find('yes/no')==-1:
+    if not buff.find('yes/no') == -1:
         channel.send('yes\n')
-	buff=''
+    buff = ''
 
 channel.send(password+'\n')
 
-buff=''
+buff = ''
 while not buff.endswith('# '):
     resp = channel.recv(9999)
-    if not resp.find(passinfo)==-1:
-        print 'Error info: Authentication failed.'
+    if not resp.find(passinfo) == -1:
+        print('Error info: Authentication failed.')
         channel.close()
         ssh.close()
-        sys.exit() 
+        sys.exit()
     buff += resp
 
-print buff
+print(buff)
 channel.close()
 ssh.close()
