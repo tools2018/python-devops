@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 import paramiko
-import os,sys,time
+import sys
 
-hostname = "172.16.1.12"
+hostname = "172.16.1.15"
 username = "root"
 password = "123"
 
@@ -25,40 +25,56 @@ channel.settimeout(10)
 
 buff = ''
 resp = ''
+respt = ''
 channel.send('ssh '+username+'@'+hostname+'\n')
 
-while not buff.endswith(passinfo):
+# while not buff.endswith(passinfo):
+#     try:
+#         resp = channel.recv(9999)
+#     except Exception as e:
+#         print('Error info:%s connection time.' % (str(e)))
+#         channel.close()
+#         ssh.close()
+#         sys.exit()
+#     buff += resp.decode()
+#     if buff.endswith('(yes/no)? '):
+#         channel.send('yes\n')
+#     buff = ''
+
+if not buff.endswith(passinfo):
     try:
         resp = channel.recv(9999)
-        print(resp)
     except Exception as e:
         print('Error info:%s connection time.' % (str(e)))
         channel.close()
         ssh.close()
         sys.exit()
-    buff = str(resp)
-    if not buff.find('yes/no') == -1:
+    buff += resp.decode()
+    if buff.endswith('(yes/no)? '):
         channel.send('yes\n')
-    buff = ''
-
-channel.send(password+'\n')
 
 buff = ''
-while not buff.endswith('# '):
-    resp = channel.recv(9999)
+channel.send(password+'\n')
+
+if not buff.endswith('# '):
+    respt = channel.recv(9999)
+    resp = respt.decode()
+    # print(resp.find(passinfo))
     if not resp.find(passinfo) == -1:
         print('Error info: Authentication failed.')
         channel.close()
         ssh.close()
-        sys.exit() 
-    buff += str(resp)
+        sys.exit()
+    buff += resp
+    print(buff)
 
 channel.send('ifconfig\n')
 buff = ''
 try: 
-    while buff.find('# ') == -1:
+    if buff.find('# ') == -1:
         resp = channel.recv(9999)
-        buff += str(resp)
+        buff += resp.decode()
+        # print(buff)
 except Exception as e:
     print("error info:"+str(e))
 

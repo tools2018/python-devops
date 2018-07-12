@@ -7,7 +7,7 @@ env.password="SKJh935yft#"
 
 @runs_once
 def input_raw():
-    return prompt("please input directory name:",default="/home")
+    return prompt("please input directory name:", default="/home")
 
 def worktask(dirname):
     run("ls -l "+dirname)

@@ -1,9 +1,10 @@
 #!/usr/bin/env python
+
 from fabric.api import *
 
-env.user='root'
-env.hosts=['192.168.1.21','192.168.1.22']
-env.password='SKJh935yft#'
+env.user = 'root'
+env.hosts = ['172.16.1.12', '172.16.1.15']
+env.password = '123'
 
 @runs_once
 def local_task():

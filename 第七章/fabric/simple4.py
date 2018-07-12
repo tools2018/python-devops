@@ -28,9 +28,9 @@ def check_task():
         lmd5=local("md5sum /data/logs/access.tar.gz",capture=True).split(' ')[0]
         rmd5=run("md5sum /data/logs/access.tar.gz").split(' ')[0]
     if lmd5==rmd5:
-        print "OK"
+        print("OK")
     else:
-        print "ERROR"
+        print("ERROR")
 
 @task
 def go():
